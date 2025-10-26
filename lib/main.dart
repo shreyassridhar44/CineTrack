@@ -1,12 +1,18 @@
-// lib/main.dart
-
 import 'package:cinetrack/app/di/injection.dart';
 import 'package:cinetrack/app/router/app_router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import the package
 
-void main() {
+Future<void> main() async { // Make main async
+  // Ensure that widgets are initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Load the .env file
+  await dotenv.load(fileName: ".env");
+
   // Setup dependency injection
   configureDependencies();
+
   // Run the app
   runApp(MyApp());
 }
@@ -14,7 +20,6 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  // Get the AppRouter instance from our DI container
   final _appRouter = getIt<AppRouter>();
 
   @override

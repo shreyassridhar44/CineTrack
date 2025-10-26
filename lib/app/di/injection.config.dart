@@ -9,6 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:cinetrack/app/router/app_router.dart' as _i697;
+import 'package:cinetrack/data/services/movie_api_service.dart' as _i27;
+import 'package:cinetrack/presentation/controllers/home_controller.dart'
+    as _i595;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -24,6 +27,9 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.singleton<_i697.AppRouter>(() => _i697.AppRouter());
+    gh.lazySingleton<_i27.MovieApiService>(() => _i27.MovieApiService());
+    gh.factory<_i595.HomeController>(
+        () => _i595.HomeController(gh<_i27.MovieApiService>()));
     return this;
   }
 }
