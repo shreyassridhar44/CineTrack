@@ -37,6 +37,18 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    PopularMoviesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PopularMoviesScreen(),
+      );
+    },
+    ProfileRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileScreen(),
+      );
+    },
     SignUpRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -47,6 +59,12 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const SplashScreen(),
+      );
+    },
+    WatchlistRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WatchlistScreen(),
       );
     },
   };
@@ -119,6 +137,34 @@ class MovieDetailRouteArgs {
 }
 
 /// generated route for
+/// [PopularMoviesScreen]
+class PopularMoviesRoute extends PageRouteInfo<void> {
+  const PopularMoviesRoute({List<PageRouteInfo>? children})
+      : super(
+          PopularMoviesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PopularMoviesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileScreen]
+class ProfileRoute extends PageRouteInfo<void> {
+  const ProfileRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [SignUpScreen]
 class SignUpRoute extends PageRouteInfo<void> {
   const SignUpRoute({List<PageRouteInfo>? children})
@@ -142,6 +188,20 @@ class SplashRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SplashRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WatchlistScreen]
+class WatchlistRoute extends PageRouteInfo<void> {
+  const WatchlistRoute({List<PageRouteInfo>? children})
+      : super(
+          WatchlistRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WatchlistRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

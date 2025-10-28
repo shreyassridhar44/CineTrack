@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^5.1.2
   cloud_firestore: ^5.1.0
   flutter_dotenv: ^6.0.0
+  shared_preferences: ^2.5.3
 
 # ------------------- Development Dependencies -------------------
 dev_dependencies:
@@ -58,3 +59,4 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/animations/
