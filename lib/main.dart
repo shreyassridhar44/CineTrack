@@ -24,36 +24,83 @@ class MyApp extends StatelessWidget {
   final _appRouter = getIt<AppRouter>();
   final _themeController = getIt<ThemeController>();
 
+  // Define a seed color for our theme
+  static const Color seedColor = Color(0xFF00539C); // A nice, deep blue
+
   @override
   Widget build(BuildContext context) {
     final currentThemeMode = _themeController.themeMode.watch(context);
 
+    // --- Define Base Themes ---
+    final lightTheme = _buildTheme(Brightness.light);
+    final darkTheme = _buildTheme(Brightness.dark);
+
     return MaterialApp.router(
       title: 'CineTrack',
       debugShowCheckedModeBanner: false,
+      
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: currentThemeMode,
+      
+      routerConfig: _appRouter.config(),
+    );
+  }
 
-      // --- Light Theme Configuration ---
-      theme: ThemeData.light(useMaterial3: true).copyWith(
-        appBarTheme: const AppBarTheme(
-          // For Light Mode: White background, black text and icons
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 1,
-          shadowColor: Colors.black26,
-        ),
-      ),
+  // --- Helper Method to Build Themes ---
+  ThemeData _buildTheme(Brightness brightness) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: seedColor,
+      brightness: brightness,
+    );
 
-      // --- Dark Theme Configuration ---
-      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
-        appBarTheme: const AppBarTheme(
-          // For Dark Mode: Dark background, white text and icons
-          backgroundColor: Color(0xFF121212),
-          foregroundColor: Colors.white,
-        ),
+    return ThemeData(
+      useMaterial3: true,
+      colorScheme: colorScheme,
+      brightness: brightness,
+
+      // --- Define App-Wide Component Themes ---
+      appBarTheme: AppBarTheme(
+        backgroundColor: colorScheme.surface,
+        foregroundColor: colorScheme.onSurface,
+        elevation: 2,
       ),
       
-      themeMode: currentThemeMode,
-      routerConfig: _appRouter.config(),
+      cardTheme: CardThemeData(
+        elevation: 2,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+
+      listTileTheme: ListTileThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+      ),
+
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+        ),
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        filled: true,
+        fillColor: colorScheme.onSurface.withOpacity(0.05),
+      ),
+      
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedItemColor: colorScheme.primary,
+        unselectedItemColor: colorScheme.onSurface.withOpacity(0.6),
+      ),
     );
   }
 }

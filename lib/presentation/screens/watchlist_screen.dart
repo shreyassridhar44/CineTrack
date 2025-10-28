@@ -31,12 +31,14 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Watchlist'),
+        centerTitle: true,
         actions: [
           IconButton(
-            // Changed icon from 'person' to 'settings'
             icon: const Icon(Icons.settings),
             onPressed: () {
               AutoRouter.of(context).push(const ProfileRoute());
@@ -48,32 +50,74 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
+
         if (controller.watchlistMovies.value.isEmpty) {
-          return const Center(
-            child: Text('Your watchlist is empty. Add some movies!'),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.bookmark_outline,
+                  size: 80,
+                  color: theme.colorScheme.onSurface.withOpacity(0.5),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Your watchlist is empty',
+                  style: theme.textTheme.headlineSmall,
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Add movies from the "Popular" tab to see them here.',
+                  style: theme.textTheme.bodyMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           );
         }
+
         return ListView.builder(
+          padding: const EdgeInsets.all(12.0),
           itemCount: controller.watchlistMovies.value.length,
           itemBuilder: (context, index) {
             final movie = controller.watchlistMovies.value[index];
             final posterUrl = movie.posterPath != null
                 ? '${ApiConstants.tmdbBaseImageUrl}${movie.posterPath}'
                 : null;
-            return ListTile(
-              leading: posterUrl != null
-                  ? Image.network(posterUrl, width: 50, fit: BoxFit.cover)
-                  : const Icon(Icons.movie),
-              title: Text(movie.title),
-              subtitle: Text(
-                movie.overview,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10.0),
+              child: ListTile(
+                // The style (shape, etc.) is controlled by main.dart
+                tileColor: theme.colorScheme.surfaceVariant,
+                leading: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: posterUrl != null
+                      ? Image.network(
+                          posterUrl,
+                          width: 50,
+                          height: 75,
+                          fit: BoxFit.cover,
+                        )
+                      : Container(
+                          width: 50,
+                          height: 75,
+                          color: theme.colorScheme.onSurface.withOpacity(0.1),
+                          child: const Icon(Icons.movie_creation_outlined),
+                        ),
+                ),
+                title: Text(movie.title, style: theme.textTheme.titleMedium),
+                subtitle: Text(
+                  movie.overview,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: theme.textTheme.bodySmall,
+                ),
+                onTap: () {
+                  AutoRouter.of(context).push(MovieDetailRoute(movieId: movie.id));
+                },
               ),
-              onTap: () {
-                AutoRouter.of(context)
-                    .push(MovieDetailRoute(movieId: movie.id));
-              },
             );
           },
         );

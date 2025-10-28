@@ -25,6 +25,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Profile & Settings')),
       body: Watch((context) {
@@ -35,42 +37,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
         return ListView(
           padding: const EdgeInsets.all(16.0),
           children: [
-            // User Info Section
-            Row(
-              children: [
-                const CircleAvatar(
-                  radius: 40,
-                  child: Icon(Icons.person, size: 40),
-                ),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      controller.userName.value,
-                      style: Theme.of(context).textTheme.headlineSmall,
+            // --- User Info Section ---
+            Container(
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                color: theme.colorScheme.surfaceVariant,
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+              child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundColor: theme.colorScheme.primary,
+                    child: Text(
+                      controller.userName.value.isNotEmpty
+                          ? controller.userName.value[0].toUpperCase()
+                          : '?',
+                      style: theme.textTheme.headlineMedium?.copyWith(
+                        color: theme.colorScheme.onPrimary,
+                      ),
                     ),
-                    Text(user.email ?? 'No email available'),
-                  ],
-                ),
-              ],
+                  ),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.userName.value,
+                          style: theme.textTheme.headlineSmall,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          user.email ?? 'No email available',
+                          style: theme.textTheme.bodyMedium,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const Divider(height: 40),
+            const SizedBox(height: 24),
 
-            // Settings Options
+            // --- Preferences Section ---
+            Text('Preferences', style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 8),
             ListTile(
-              leading: const Icon(Icons.brightness_6),
+              leading: const Icon(Icons.brightness_6_outlined),
               title: const Text('Change Theme'),
               subtitle: const Text('Light, Dark, System Default'),
               onTap: () => _showThemeDialog(context),
             ),
+            const SizedBox(height: 16),
+            
+            // --- Account Section ---
+            Text('Account', style: theme.textTheme.titleSmall?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+            const SizedBox(height: 8),
             ListTile(
               leading: const Icon(Icons.lock_outline),
               title: const Text('Change Password'),
               onTap: () => controller.handleChangePassword(context),
             ),
             ListTile(
-              leading: const Icon(Icons.exit_to_app, color: Colors.orange),
+              leading: Icon(Icons.exit_to_app, color: theme.colorScheme.tertiary),
               title: const Text('Sign Out'),
               onTap: () => _showConfirmationDialog(
                 context: context,
@@ -80,7 +111,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.delete_forever, color: Colors.red),
+              leading: Icon(Icons.delete_forever_outlined, color: theme.colorScheme.error),
               title: const Text('Delete Account'),
               onTap: () => _showConfirmationDialog(
                 context: context,
@@ -156,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           TextButton(
-            child: Text(title, style: const TextStyle(color: Colors.red)),
+            child: Text(title, style: TextStyle(color: Theme.of(context).colorScheme.error)),
             onPressed: () {
               Navigator.of(context).pop();
               onConfirm();

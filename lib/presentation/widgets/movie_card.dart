@@ -14,25 +14,73 @@ class MovieCard extends StatelessWidget {
         ? '${ApiConstants.tmdbBaseImageUrl}${movie.posterPath}'
         : null;
 
-    return GestureDetector(
-      onTap: () {
-        AutoRouter.of(context).push(MovieDetailRoute(movieId: movie.id));
-      },
-      child: Card(
-        clipBehavior: Clip.antiAlias,
-        child: posterUrl != null
-            ? Image.network(
-                posterUrl, // <-- THIS is the required positional argument
+    return Card(
+      // The theme's CardTheme will handle elevation and shape.
+      child: GestureDetector(
+        onTap: () {
+          AutoRouter.of(context).push(MovieDetailRoute(movieId: movie.id));
+        },
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            // --- Movie Poster ---
+            if (posterUrl != null)
+              Image.network(
+                posterUrl,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, loadingProgress) {
                   if (loadingProgress == null) return child;
                   return const Center(child: CircularProgressIndicator());
                 },
                 errorBuilder: (context, error, stackTrace) {
-                  return const Center(child: Icon(Icons.movie));
+                  return _buildErrorPlaceholder(context);
                 },
               )
-            : const Center(child: Icon(Icons.movie)),
+            else
+              _buildErrorPlaceholder(context),
+            
+            // --- Rating Badge ---
+            Positioned(
+              top: 8,
+              right: 8,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.amber, size: 14),
+                    const SizedBox(width: 4),
+                    Text(
+                      movie.voteAverage.toStringAsFixed(1),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // --- Placeholder for missing posters ---
+  Widget _buildErrorPlaceholder(BuildContext context) {
+    return Container(
+      color: Theme.of(context).colorScheme.surfaceVariant,
+      child: Center(
+        child: Icon(
+          Icons.movie_creation_outlined,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+          size: 50,
+        ),
       ),
     );
   }

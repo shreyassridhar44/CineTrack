@@ -26,6 +26,7 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // The AppBar style is now controlled by main.dart
       appBar: AppBar(
         title: const Text('CineTrack - Popular Movies'),
         centerTitle: true,
@@ -39,16 +40,25 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
         ],
       ),
       body: Watch((context) {
-        // --- This is the new part for error handling ---
         if (controller.errorMessage.value != null) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(controller.errorMessage.value!),
+                Icon(
+                  Icons.signal_wifi_off,
+                  size: 60,
+                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  controller.errorMessage.value!,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                  textAlign: TextAlign.center,
+                ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: controller.fetchPopularMovies, // Retry button
+                  onPressed: controller.fetchPopularMovies,
                   child: const Text('Try Again'),
                 ),
               ],
@@ -60,14 +70,13 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
           return const Center(child: CircularProgressIndicator());
         }
 
-        // --- The rest of the code is the same ---
         return GridView.builder(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.7,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 8,
+            childAspectRatio: 0.68, // Adjusted for the new card style
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
           ),
           itemCount: controller.movies.value.length,
           itemBuilder: (context, index) {
