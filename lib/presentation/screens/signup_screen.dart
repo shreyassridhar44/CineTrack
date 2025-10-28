@@ -1,21 +1,20 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cinetrack/app/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:signals/signals_flutter.dart';
 import '../../app/di/injection.dart';
 import '../controllers/auth_controller.dart';
 
 @RoutePage()
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Use a new instance or a shared one depending on desired state behavior
+    // We use the same AuthController instance
     final controller = getIt<AuthController>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Login to CineTrack')),
+      appBar: AppBar(title: const Text('Create Account')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Watch((context) {
@@ -45,15 +44,17 @@ class LoginScreen extends StatelessWidget {
                 const CircularProgressIndicator()
               else
                 ElevatedButton(
-                  onPressed: () => controller.signIn(context),
-                  child: const Text('Login'),
+                  // The main difference: calls signUp
+                  onPressed: () => controller.signUp(context),
+                  child: const Text('Sign Up'),
                 ),
               TextButton(
                 onPressed: () {
                   controller.clearState();
-                  AutoRouter.of(context).push(SignUpRoute());
+                  // Navigates back to the login screen
+                  AutoRouter.of(context).pop();
                 },
-                child: const Text('Don\'t have an account? Sign Up'),
+                child: const Text('Already have an account? Login'),
               ),
             ],
           );

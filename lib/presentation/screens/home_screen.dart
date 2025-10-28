@@ -14,13 +14,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Get the HomeController instance from GetIt
   final controller = getIt<HomeController>();
 
   @override
   void initState() {
     super.initState();
-    // Fetch movies when the screen is first initialized
     controller.fetchPopularMovies();
   }
 
@@ -31,9 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('CineTrack - Popular Movies'),
         backgroundColor: Colors.black,
         centerTitle: true,
+        // The 'actions' property containing the button has been removed.
       ),
       body: Watch((context) {
-        // This Watch widget rebuilds whenever a signal inside it changes
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -45,8 +43,8 @@ class _HomeScreenState extends State<HomeScreen> {
         return GridView.builder(
           padding: const EdgeInsets.all(8.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 movies per row
-            childAspectRatio: 0.7, // Aspect ratio for movie posters
+            crossAxisCount: 2,
+            childAspectRatio: 0.7,
             crossAxisSpacing: 8,
             mainAxisSpacing: 8,
           ),

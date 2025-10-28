@@ -1,15 +1,15 @@
-// lib/app/router/app_router.dart
-
 import 'package:auto_route/auto_route.dart';
-import 'package:injectable/injectable.dart'; // <-- THIS LINE WAS MISSING
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login_screen.dart';
 import '../../presentation/screens/movie_detail_screen.dart';
+import '../../presentation/screens/signup_screen.dart'; // <-- Import new screen
 import '../../presentation/screens/splash_screen.dart';
 
 part 'app_router.gr.dart';
 
-@singleton // Now Dart knows what this is!
+@singleton
 @AutoRouterConfig()
 class AppRouter extends _$AppRouter {
   @override
@@ -18,5 +18,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: LoginRoute.page),
         AutoRoute(page: HomeRoute.page),
         AutoRoute(page: MovieDetailRoute.page),
+        AutoRoute(page: SignUpRoute.page), // <-- Add the new route
       ];
 }

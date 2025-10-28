@@ -25,4 +25,14 @@ class MovieApiService {
       return [];
     }
   }
+
+  Future<Movie> getMovieDetails(int movieId) async {
+  try {
+    final response = await _dio.get('/movie/$movieId');
+    return Movie.fromJson(response.data);
+  } catch (e) {
+    print('Error fetching movie details: $e');
+    throw Exception('Failed to load movie details');
+  }
+}
 }

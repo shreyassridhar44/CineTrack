@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'package:auto_route/auto_route.dart';
-// Change this line:
-// import 'package:cinetrack/app/router/app_router.gr.dart';
-// To this line:
-import '../../app/router/app_router.dart';
+import 'package:cinetrack/app/router/app_router.dart';
 import 'package:flutter/material.dart';
+import '../../app/di/injection.dart';
+import '../../data/services/auth_service.dart';
 
 @RoutePage()
 class SplashScreen extends StatefulWidget {
@@ -14,25 +14,40 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  // Use a StreamSubscription to listen to auth changes
+  late final StreamSubscription _authSubscription;
+
   @override
   void initState() {
     super.initState();
-    _navigateToHome();
+    final authService = getIt<AuthService>();
+
+    // Listen to the auth state stream
+    _authSubscription = authService.authStateChanges.listen((user) {
+      // Allow a small delay for the app to settle
+      Future.delayed(const Duration(seconds: 1), () {
+        if (user != null) {
+          // User is logged in
+          AutoRouter.of(context).replaceAll([const HomeRoute()]);
+        } else {
+          // User is not logged in
+          AutoRouter.of(context).replaceAll([const LoginRoute()]);
+        }
+      });
+    });
   }
 
-  void _navigateToHome() {
-    // Wait for 2 seconds then navigate to the HomeScreen
-    Future.delayed(const Duration(seconds: 2), () {
-      // Use 'replace' so the user can't go back to the splash screen
-      AutoRouter.of(context).replace(const HomeRoute());
-    });
+  @override
+  void dispose() {
+    // Important: Cancel the subscription to avoid memory leaks
+    _authSubscription.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        // You could put a Lottie animation or a logo here later
         child: CircularProgressIndicator(),
       ),
     );

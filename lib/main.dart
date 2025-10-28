@@ -1,19 +1,20 @@
 import 'package:cinetrack/app/di/injection.dart';
 import 'package:cinetrack/app/router/app_router.dart';
+import 'package:firebase_core/firebase_core.dart'; // Import Firebase Core
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import the package
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'firebase_options.dart'; // Import the generated file
 
-Future<void> main() async { // Make main async
-  // Ensure that widgets are initialized
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Load the .env file
   await dotenv.load(fileName: ".env");
 
-  // Setup dependency injection
-  configureDependencies();
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  // Run the app
+  configureDependencies();
   runApp(MyApp());
 }
 

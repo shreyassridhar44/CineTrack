@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393713436453",
+    "project_id": "cinetrack-81b88",
+    "storage_bucket": "cinetrack-81b88.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393713436453:android:c034361ca580f33361fccc",
+        "android_client_info": {
+          "package_name": "com.example.cinetrack"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxFEzpt1_f9xPcU5v1Mii5Z4VhP94J3y0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

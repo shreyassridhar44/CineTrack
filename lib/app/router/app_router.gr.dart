@@ -28,9 +28,19 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MovieDetailRoute.name: (routeData) {
+      final args = routeData.argsAs<MovieDetailRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MovieDetailScreen(),
+        child: MovieDetailScreen(
+          key: args.key,
+          movieId: args.movieId,
+        ),
+      );
+    },
+    SignUpRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SignUpScreen(),
       );
     },
     SplashRoute.name: (routeData) {
@@ -72,14 +82,52 @@ class LoginRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MovieDetailScreen]
-class MovieDetailRoute extends PageRouteInfo<void> {
-  const MovieDetailRoute({List<PageRouteInfo>? children})
-      : super(
+class MovieDetailRoute extends PageRouteInfo<MovieDetailRouteArgs> {
+  MovieDetailRoute({
+    Key? key,
+    required int movieId,
+    List<PageRouteInfo>? children,
+  }) : super(
           MovieDetailRoute.name,
+          args: MovieDetailRouteArgs(
+            key: key,
+            movieId: movieId,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MovieDetailRoute';
+
+  static const PageInfo<MovieDetailRouteArgs> page =
+      PageInfo<MovieDetailRouteArgs>(name);
+}
+
+class MovieDetailRouteArgs {
+  const MovieDetailRouteArgs({
+    this.key,
+    required this.movieId,
+  });
+
+  final Key? key;
+
+  final int movieId;
+
+  @override
+  String toString() {
+    return 'MovieDetailRouteArgs{key: $key, movieId: $movieId}';
+  }
+}
+
+/// generated route for
+/// [SignUpScreen]
+class SignUpRoute extends PageRouteInfo<void> {
+  const SignUpRoute({List<PageRouteInfo>? children})
+      : super(
+          SignUpRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SignUpRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
