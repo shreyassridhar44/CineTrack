@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:signals/signals.dart';
+import '../../core/logger.dart'; // <-- Import our logger
 import '../../data/services/auth_service.dart';
 
 @injectable
@@ -11,24 +12,27 @@ class AuthController {
   final AuthService _authService;
   AuthController(this._authService);
 
-  // --- State Signals ---
   final email = signal('');
   final password = signal('');
   final isLoading = signal(false);
   final errorMessage = signal<String?>(null);
 
-  // --- Logic ---
   Future<void> signIn(BuildContext context) async {
     isLoading.value = true;
     errorMessage.value = null;
+    final userEmail = email.value.trim();
+    log.i("Attempting to sign in user: $userEmail"); // Info log
     try {
       await _authService.signInWithEmailAndPassword(
-        email: email.value.trim(),
+        email: userEmail,
         password: password.value.trim(),
       );
-      // On success, navigate to home and clear all previous routes
-      AutoRouter.of(context).replaceAll([const HomeRoute()]);
+      log.d("Sign in successful for: $userEmail"); // Debug log
+      if (context.mounted) {
+        AutoRouter.of(context).replaceAll([const HomeRoute()]);
+      }
     } on FirebaseAuthException catch (e) {
+      log.w("Sign in failed for $userEmail", error: e); // Warning log
       errorMessage.value = e.message ?? "An unknown error occurred.";
     } finally {
       isLoading.value = false;
@@ -38,21 +42,25 @@ class AuthController {
   Future<void> signUp(BuildContext context) async {
     isLoading.value = true;
     errorMessage.value = null;
+    final userEmail = email.value.trim();
+    log.i("Attempting to sign up new user: $userEmail"); // Info log
     try {
       await _authService.signUpWithEmailAndPassword(
-        email: email.value.trim(),
+        email: userEmail,
         password: password.value.trim(),
       );
-      // On success, navigate to home and clear all previous routes
-      AutoRouter.of(context).replaceAll([const HomeRoute()]);
+      log.d("Sign up successful for: $userEmail"); // Debug log
+      if (context.mounted) {
+        AutoRouter.of(context).replaceAll([const HomeRoute()]);
+      }
     } on FirebaseAuthException catch (e) {
+      log.w("Sign up failed for $userEmail", error: e); // Warning log
       errorMessage.value = e.message ?? "An unknown error occurred.";
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Method to clear state when switching screens
   void clearState() {
     email.value = '';
     password.value = '';

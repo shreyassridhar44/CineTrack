@@ -31,11 +31,29 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           return const Center(child: CircularProgressIndicator());
         }
 
+        // --- New: Check for an error first ---
+        if (controller.errorMessage.value != null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(controller.errorMessage.value!),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () => controller.fetchMovieDetails(widget.movieId),
+                  child: const Text('Try Again'),
+                ),
+              ],
+            ),
+          );
+        }
+
         final movie = controller.movie.value;
         if (movie == null) {
           return const Center(child: Text('Movie not found.'));
         }
 
+        // --- The rest of the UI is the same ---
         final posterUrl = movie.posterPath != null
             ? '${ApiConstants.tmdbBaseImageUrl}${movie.posterPath}'
             : null;
@@ -62,19 +80,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       ElevatedButton.icon(
                         onPressed: controller.toggleWatchlistStatus,
                         icon: Icon(
-                          controller.isInWatchlist.value
-                              ? Icons.check
-                              : Icons.add,
+                          controller.isInWatchlist.value ? Icons.check : Icons.add,
                         ),
                         label: Text(
                           controller.isInWatchlist.value
-                              ? 'Added to Watchlist'
+                              ? 'In Watchlist'
                               : 'Add to Watchlist',
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: controller.isInWatchlist.value
                               ? Colors.green
-                              : Colors.blue,
+                              : Theme.of(context).primaryColor,
                         ),
                       ),
                       const SizedBox(height: 16),

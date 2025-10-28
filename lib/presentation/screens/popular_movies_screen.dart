@@ -29,10 +29,8 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
       appBar: AppBar(
         title: const Text('CineTrack - Popular Movies'),
         centerTitle: true,
-        // We removed 'backgroundColor: Colors.black' - The theme now handles it.
         actions: [
           IconButton(
-            // Changed icon from 'person' to 'settings'
             icon: const Icon(Icons.settings),
             onPressed: () {
               AutoRouter.of(context).push(const ProfileRoute());
@@ -41,12 +39,28 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
         ],
       ),
       body: Watch((context) {
-        if (controller.isLoading.value) {
+        // --- This is the new part for error handling ---
+        if (controller.errorMessage.value != null) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(controller.errorMessage.value!),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: controller.fetchPopularMovies, // Retry button
+                  child: const Text('Try Again'),
+                ),
+              ],
+            ),
+          );
+        }
+
+        if (controller.isLoading.value && controller.movies.value.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
-        if (controller.errorMessage.value != null) {
-          return Center(child: Text(controller.errorMessage.value!));
-        }
+
+        // --- The rest of the code is the same ---
         return GridView.builder(
           padding: const EdgeInsets.all(8.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

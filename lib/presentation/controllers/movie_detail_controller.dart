@@ -15,35 +15,34 @@ class MovieDetailController {
   final movie = signal<Movie?>(null);
   final isLoading = signal(false);
   final isInWatchlist = signal(false);
+  final errorMessage = signal<String?>(null); // <-- Add error signal
 
   // --- Logic ---
   Future<void> fetchMovieDetails(int movieId) async {
     isLoading.value = true;
+    errorMessage.value = null; // Clear previous errors
     try {
-      // Fetch movie data from the API
       final fetchedMovie = await _apiService.getMovieDetails(movieId);
       movie.value = fetchedMovie;
 
-      // Listen to the watchlist stream to see if this movie is included
       _watchlistService.getWatchlistStream().listen((watchlistIds) {
         isInWatchlist.value = watchlistIds.contains(movieId);
       });
     } catch (e) {
-      // Handle error
+      errorMessage.value = "Failed to load movie details."; // Set error
     } finally {
       isLoading.value = false;
     }
   }
 
   void toggleWatchlistStatus() {
-  final currentMovie = movie.value; // Get the full movie object
-  if (currentMovie == null) return;
+    final currentMovie = movie.value;
+    if (currentMovie == null) return;
 
-  if (isInWatchlist.value) {
-    _watchlistService.removeFromWatchlist(currentMovie.id);
-  } else {
-    // Pass the entire movie object now
-    _watchlistService.addToWatchlist(currentMovie);
+    if (isInWatchlist.value) {
+      _watchlistService.removeFromWatchlist(currentMovie.id);
+    } else {
+      _watchlistService.addToWatchlist(currentMovie);
+    }
   }
-}
 }
