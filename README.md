@@ -67,7 +67,7 @@ To run this project locally, follow these steps.
 ### Installation
 1.  **Clone the repository:**
     ```sh
-    git clone [https://github.com/your-username/cinetrack.git](https://github.com/your-username/cinetrack.git)
+    git clone https://github.com/shreyassridhar44/CineTrack.git
     ```
 2.  **Navigate into the project directory:**
     ```sh
