@@ -14,7 +14,6 @@ class LoginScreen extends StatelessWidget {
     final controller = getIt<AuthController>();
 
     return Scaffold(
-      // The AppBar is removed.
       body: SafeArea( // Use SafeArea to avoid UI overlapping with system notches.
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -24,7 +23,6 @@ class LoginScreen extends StatelessWidget {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // --- New UI Section ---
                     Icon(
                       Icons.movie_filter_outlined,
                       size: 80,

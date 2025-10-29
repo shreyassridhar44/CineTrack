@@ -14,7 +14,6 @@ class AuthService {
   }
 
   Future<void> _createUserDocument(User user) {
-    //... (this method is unchanged)
     return _firestore.collection('users').doc(user.uid).set({
       'email': user.email,
       'createdAt': FieldValue.serverTimestamp(),
@@ -22,7 +21,6 @@ class AuthService {
   }
 
   Future<UserCredential> signUpWithEmailAndPassword({
-    //... (this method is unchanged)
     required String email,
     required String password,
   }) async {
@@ -37,7 +35,6 @@ class AuthService {
   }
 
   Future<UserCredential> signInWithEmailAndPassword({
-    //... (this method is unchanged)
     required String email,
     required String password,
   }) {
@@ -48,11 +45,9 @@ class AuthService {
   }
 
   Future<void> signOut() {
-    //... (this method is unchanged)
     return _firebaseAuth.signOut();
   }
   
-  // --- New Method for Password Reset ---
   Future<void> changePassword() async {
     final user = _firebaseAuth.currentUser;
     if (user == null || user.email == null) {
@@ -62,7 +57,6 @@ class AuthService {
   }
 
   Future<void> deleteAccount() async {
-    //... (this method is unchanged)
     final user = _firebaseAuth.currentUser;
     if (user == null) {
       throw Exception("No user is currently signed in.");

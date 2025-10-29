@@ -26,7 +26,6 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // The AppBar style is now controlled by main.dart
       appBar: AppBar(
         title: const Text('CineTrack - Popular Movies'),
         centerTitle: true,
@@ -74,7 +73,7 @@ class _PopularMoviesScreenState extends State<PopularMoviesScreen> {
           padding: const EdgeInsets.all(12.0),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            childAspectRatio: 0.68, // Adjusted for the new card style
+            childAspectRatio: 0.68, 
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),

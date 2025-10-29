@@ -21,11 +21,9 @@ class ProfileController {
   final user = signal<User?>(null);
 
   void loadUserData() {
-    //... (this method is unchanged)
     user.value = _authService.getCurrentUser();
   }
 
-  // --- New Method to Handle Password Change ---
   Future<void> handleChangePassword(BuildContext context) async {
     try {
       await _authService.changePassword();
@@ -50,7 +48,6 @@ class ProfileController {
   }
 
   Future<void> handleSignOut(BuildContext context) async {
-    //... (this method is unchanged)
     await _authService.signOut();
     if (context.mounted) {
       AutoRouter.of(context).replaceAll([const LoginRoute()]);
@@ -58,7 +55,6 @@ class ProfileController {
   }
 
   Future<void> handleDeleteAccount(BuildContext context) async {
-    //... (this method is unchanged)
     try {
       await _authService.deleteAccount();
       if (context.mounted) {

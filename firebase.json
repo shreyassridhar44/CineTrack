@@ -1,1 +1,56 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"cinetrack-81b88","appId":"1:393713436453:android:c034361ca580f33361fccc","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"cinetrack-81b88","configurations":{"android":"1:393713436453:android:c034361ca580f33361fccc","ios":"1:393713436453:ios:4a386e2c03ca5d3961fccc","macos":"1:393713436453:ios:4a386e2c03ca5d3961fccc","web":"1:393713436453:web:93605f13b748e9c861fccc","windows":"1:393713436453:web:7c16b7016e41642961fccc"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "cinetrack-81b88",
+          "appId": "1:393713436453:android:c034361ca580f33361fccc",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "cinetrack-81b88",
+          "configurations": {
+            "android": "1:393713436453:android:c034361ca580f33361fccc",
+            "ios": "1:393713436453:ios:4a386e2c03ca5d3961fccc",
+            "macos": "1:393713436453:ios:4a386e2c03ca5d3961fccc",
+            "web": "1:393713436453:web:93605f13b748e9c861fccc",
+            "windows": "1:393713436453:web:7c16b7016e41642961fccc"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "disallowLegacyRuntimeConfig": true,
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
+    }
+  ]
+}

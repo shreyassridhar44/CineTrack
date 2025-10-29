@@ -47,14 +47,12 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // We no longer need a StreamSubscription or a dispose() method.
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          'assets/animations/movie_loader.json', // Or your test file name
+          'assets/animations/movie_loader.json', 
           width: 200,
           height: 200,
         ),

@@ -33,7 +33,7 @@ class WatchlistService {
     return _getWatchlistCollectionRef().doc(movie.id.toString()).set({
       'title': movie.title,
       'posterPath': movie.posterPath,
-      'addedAt': FieldValue.serverTimestamp(), // Good practice
+      'addedAt': FieldValue.serverTimestamp(), 
     });
   }
 

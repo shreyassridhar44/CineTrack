@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:signals/signals.dart';
-import '../../core/logger.dart'; // <-- Import our logger
+import '../../core/logger.dart'; 
 import '../../data/services/auth_service.dart';
 
 @injectable

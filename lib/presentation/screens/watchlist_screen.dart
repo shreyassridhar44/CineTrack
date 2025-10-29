@@ -89,7 +89,6 @@ class _WatchlistScreenState extends State<WatchlistScreen> {
             return Padding(
               padding: const EdgeInsets.only(bottom: 10.0),
               child: ListTile(
-                // The style (shape, etc.) is controlled by main.dart
                 tileColor: theme.colorScheme.surfaceVariant,
                 leading: ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),

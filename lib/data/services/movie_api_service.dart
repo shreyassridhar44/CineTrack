@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import '../../core/constants/api_constants.dart';
-import '../../core/logger.dart'; // <-- Import our logger
+import '../../core/logger.dart'; 
 import '../models/movie.dart';
 
 @lazySingleton

@@ -13,7 +13,6 @@ class SignUpScreen extends StatelessWidget {
     final controller = getIt<AuthController>();
 
     return Scaffold(
-      // AppBar is removed.
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -23,7 +22,6 @@ class SignUpScreen extends StatelessWidget {
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // --- New UI Section ---
                     Icon(
                       Icons.person_add_alt_1_outlined,
                       size: 80,

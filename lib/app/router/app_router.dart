@@ -4,10 +4,10 @@ import 'package:injectable/injectable.dart';
 import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login_screen.dart';
 import '../../presentation/screens/movie_detail_screen.dart';
-import '../../presentation/screens/popular_movies_screen.dart'; // Import popular
+import '../../presentation/screens/popular_movies_screen.dart'; 
 import '../../presentation/screens/signup_screen.dart';
 import '../../presentation/screens/splash_screen.dart';
-import '../../presentation/screens/watchlist_screen.dart'; // Import watchlist
+import '../../presentation/screens/watchlist_screen.dart'; 
 import '../../presentation/screens/profile_screen.dart';
 
 part 'app_router.gr.dart';
