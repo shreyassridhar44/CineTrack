@@ -1,0 +1,15 @@
+[build]
+  # Tell Netlify how to build your Flutter web app
+  command   = "flutter build web"
+
+  # Tell Netlify where the finished website will be
+  publish   = "build/web"
+
+  # Tell Netlify where your proxy function is
+  functions = "netlify/functions"
+
+[[redirects]]
+  # This rule handles Flutter's single-page app routing
+  from = "/*"
+  to = "/index.html"
+  status = 200
