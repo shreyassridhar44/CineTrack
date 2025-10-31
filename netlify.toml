@@ -1,6 +1,6 @@
 [build]
   # Tell Netlify how to build your Flutter web app
-  command   = "flutter build web"
+  command   = "bash ./netlify_build.sh"
 
   # Tell Netlify where the finished website will be
   publish   = "build/web"
